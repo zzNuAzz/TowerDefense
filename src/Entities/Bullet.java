@@ -1,6 +1,6 @@
 package Entities;
 
-public class Bullet extends GameEntity {
+public class Bullet extends MovableEntity {
     @Override
     public void update(long t) {
 

@@ -1,18 +1,11 @@
-import Graphics.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 
 public class TowerDefense extends Application {
@@ -26,13 +19,19 @@ public class TowerDefense extends Application {
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-
-        Canvas canvas = new Canvas(1080, 720);
+        Canvas canvas = new Canvas(128*20 /2, 128*12 /2);
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.scale(0.5,0.5);
+        GameField gameField = new GameField("Level/level1.txt");
+        gameField.draw(gc);
 
-        Sprite s = new Sprite("res/PNG/ (1).png");
-        s.draw(gc, 0,0);
+        gc.setStroke(Color.BLACK);
+        for(int i = 0; i < 128*20; i+= 128)
+            gc.fillRect(i,0,1,128 * 12);;
+        for(int i = 0; i < 128*12; i+= 128)
+            gc.fillRect(0,i,128 * 20,1);
+
         primaryStage.show();
     }
 }
