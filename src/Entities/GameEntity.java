@@ -1,9 +1,8 @@
 package Entities;
-
 import Graphics.Sprite;
 import com.sun.javafx.geom.Vec2f;
 
-public abstract class GameEntity {
+public abstract class GameEntity implements IRender {
     protected double xPos_ = 0;
     protected double yPos_ = 0;
     protected Sprite sprite_;
@@ -24,5 +23,5 @@ public abstract class GameEntity {
     public Vec2f getPosition() {
         return new Vec2f((float)xPos_, (float)yPos_);
     }
-    public abstract void update(long t);
+
 }

@@ -13,9 +13,9 @@ public class GameField {
     private int map[][] = new int[NROW][NCOL];
     private static int tileSize = 128;
     ArrayList<Sprite> tileMap;
-    GameField(String path) {
+    GameField(String path,int themeIndex) {
         loadMapFromFile(new File(path));
-        loadSpriteTileMap();
+        loadSpriteTileMap(themeIndex);
     }
 
     public void setCoins(int coins) { this.coins = coins; }
@@ -35,13 +35,13 @@ public class GameField {
             for (int j = 0; j < NCOL; j++) map[i][j] = sc.nextInt();
     }
 
-   private void loadSpriteTileMap() {
-        tileMap = Sprite.listTheme.get(0);
+   private void loadSpriteTileMap(int i) {
+        tileMap = Sprite.listTheme.get(i);
    }
    public void draw(GraphicsContext gc) {
         for(int i = 0; i < 12; i++) {
             for(int j = 0; j < 20; j++) {
-                tileMap.get(map[i][j]-1).draw(gc, j * tileSize, i * tileSize);
+                tileMap.get(map[i][j]).draw(gc, j * tileSize, i * tileSize);
                 System.out.print(map[i][j] + " ");
             }
             System.out.println("");

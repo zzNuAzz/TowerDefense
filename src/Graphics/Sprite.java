@@ -9,20 +9,29 @@ import java.util.ArrayList;
 public class Sprite {
     private double width_;
     private double height_;
-    private String path_;
-    private Image image_;
+    //private String path_;
     private double realWidth_;
     private double realHeight_;
+    private Image image_;
 
     public Sprite(){
     }
     public Sprite(String path) {
-        this.path_ = path;
+        //this.path_ = path;
         loadImage(path);
+    }
+    public Sprite(Image image) {
+        setImage(image);
     }
     public Sprite(String path, double width, double height) {
         this(path);
         setSize(width, height);
+        setRealSize(width, height);
+    }
+    public Sprite(String path, double width, double height, double realWidth, double realHeight) {
+        this(path);
+        setSize(width, height);
+        setRealSize(realWidth, realHeight);
     }
 
     public void setSize(double width, double height) {
@@ -43,29 +52,40 @@ public class Sprite {
     public double getHeight() {
         return height_;
     }
-    public void setImage(Image i) {
-        image_ = i;
-        setSize(i.getWidth(), i.getHeight());
+    public void setImage(Image image, double realWidth_, double realHeight_) {
+        image_ = image;
+        setSize(image.getWidth(), image.getHeight());
+        setRealSize(realWidth_,realHeight_);
+    }
+    public  void setImage(Image img) {
+        setImage(img, img.getWidth(), img.getHeight());
     }
     public  void loadImage(String path) {
-        this.path_ = path;
+        //this.path_ = path;
         setImage(new Image(path));
     }
     public void draw(GraphicsContext gc, double x, double y) {
         gc.drawImage(image_, x, y);
     }
     /*
-    |---------------------------------------------------------
-    | Theme Sprite
-    |---------------------------------------------------------
+    |============================================================
+    | Theme Sprite                                              |
+    |============================================================
     */
     public static ArrayList<ArrayList<Sprite>> listTheme = getTheme();
     private static ArrayList<ArrayList<Sprite>> getTheme() {
         ArrayList<ArrayList<Sprite>> listTheme = new ArrayList<>();
-        ArrayList<Sprite> theme = new ArrayList<>();
-        for(int i = 1; i <= 15; i++)
-            theme.add(new Sprite("res/TileMap/Theme1/theme"+i+".png"));
-        listTheme.add(theme);
+
+        for (int offsetX = 0; offsetX < 3; offsetX++) {
+            for (int offsetY = 0; offsetY < 4; offsetY++) {
+                ArrayList<Sprite> theme = new ArrayList<>();
+                for(int i = 0; i < 3; i++)
+                    for(int j = 0; j < 5; j++)
+                        theme.add(SpriteSheet.texture.getSprite(i+offsetY * 3,j+offsetX * 5));
+                listTheme.add(theme);
+            }
+        }
+
         return listTheme;
     }
 }

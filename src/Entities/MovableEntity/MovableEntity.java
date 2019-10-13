@@ -1,6 +1,8 @@
-package Entities;
+package Entities.MovableEntity;
 
-public abstract class MovableEntity extends GameEntity{
+import Entities.GameEntity;
+
+public abstract class MovableEntity extends GameEntity {
     protected double xVelocity_ = 0;
     protected double yVelocity_ = 0;
 

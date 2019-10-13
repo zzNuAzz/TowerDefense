@@ -1,4 +1,4 @@
-package Entities;
+package Entities.MovableEntity;
 
 public class Bullet extends MovableEntity {
     @Override
