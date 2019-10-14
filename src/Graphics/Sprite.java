@@ -1,8 +1,10 @@
 package Graphics;
 
 import com.sun.javafx.geom.Vec2f;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import javafx.scene.image.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -64,9 +66,11 @@ public class Sprite {
         //this.path_ = path;
         setImage(new Image(path));
     }
+
     public void draw(GraphicsContext gc, double x, double y) {
         gc.drawImage(image_, x, y);
     }
+
     /*
     |============================================================
     | Theme Sprite                                              |
@@ -85,7 +89,12 @@ public class Sprite {
                 listTheme.add(theme);
             }
         }
-
         return listTheme;
     }
+    /*
+    |========================================================
+    |Enemy Sprite
+    |========================================================
+    */
+    public static Sprite normalEnemy = SpriteSheet.texture.getSprite(11,15,2,2);
 }

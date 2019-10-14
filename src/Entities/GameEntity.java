@@ -5,8 +5,9 @@ import com.sun.javafx.geom.Vec2f;
 public abstract class GameEntity implements IRender {
     protected double xPos_ = 0;
     protected double yPos_ = 0;
-    protected Sprite sprite_;
+    public GameEntity(){
 
+   }
     public void setPosition(double x, double y) {
         setXPosition(x);
         setYPosition(y);
