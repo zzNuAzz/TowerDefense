@@ -4,6 +4,7 @@ import entities.movableEntity.bullet.MachineGunBullet;
 import game.Config;
 import game.GameField;
 import graphics.Sprite;
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
 
 public class MachineGunTower extends Tower {
     public MachineGunTower(GameField gameField_) {
@@ -11,6 +12,7 @@ public class MachineGunTower extends Tower {
         size_ = Config.TILE_SIZE;
         range_ = Config.MACHINE_GUN_TOWER_RANGE;
         speed_ = Config.MACHINE_GUN_TOWER_SPEED;
+        cost_ = Config.MACHINE_GUN_TOWER_COST;
     }
 
     protected long tickDown1 = 0;

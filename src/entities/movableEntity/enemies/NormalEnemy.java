@@ -10,7 +10,11 @@ public class NormalEnemy extends Enemy {
         size_ = Config.TILE_SIZE * 2;
         init(Config.NORMAL_ENEMY_MAX_HEALTH, Config.NORMAL_ENEMY_SPEED, Config.NORMAL_ENEMY_ARMOR, Config.NORMAL_ENEMY_REWARD_COINS, Config.NORMAL_ENEMY_HP_BAR_OFFSET);
     }
-
+    public NormalEnemy(GameField gameField, int hp, int speed, int armor, int coins) {
+        super(gameField);
+        size_ = Config.TILE_SIZE * 2;
+        init(hp, speed, armor, coins, Config.NORMAL_ENEMY_HP_BAR_OFFSET);
+    }
     @Override
     public void draw() {
         switch (direct) {

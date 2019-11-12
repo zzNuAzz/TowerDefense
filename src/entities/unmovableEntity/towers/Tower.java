@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 public abstract class Tower extends GameTile implements Rotatable {
     protected double range_;
     protected double speed_;
+    protected double cost_;
 
     protected double angleAim_ = 0;
     protected Enemy target_;
@@ -32,7 +33,8 @@ public abstract class Tower extends GameTile implements Rotatable {
             for (int i = gameField_.getEnemyList().size() - 1; i >= 0; i--) {
                 Enemy enemy = gameField_.getEnemyList().get(i);
                 if (Vec2d.distance(x1, y1, enemy.getXPos() + Config.TILE_SIZE, enemy.getYPos() + Config.TILE_SIZE) < range_)
-                    target_ = enemy;
+                    if(target_ == null) target_ = enemy;
+                    else if(target_.getDistanceSpawn() < enemy.getDistanceSpawn()) target_ = enemy;
             }
         }
         //turn to the enemy target
@@ -74,7 +76,8 @@ public abstract class Tower extends GameTile implements Rotatable {
         angleAim_ = Coordinate.angle(x1, x2, y1, y2);
     }
 
-    public boolean canPlace() {
+    public boolean canPlace(int coins) {
+        if(coins < cost_) return false;
         int x = (int) Coordinate.fixAccuracy(this.getXPos() / (Config.TILE_SIZE / 4.));
         int y = (int) Coordinate.fixAccuracy(this.getYPos() / (Config.TILE_SIZE / 4.));
         if (x < 0 || y < 0 || x + 4 > Config.CANVAS_WIDTH / (Config.TILE_SIZE / 4.) || y + 4 > Config.CANVAS_HEIGHT / (Config.TILE_SIZE / 4.))
@@ -91,5 +94,9 @@ public abstract class Tower extends GameTile implements Rotatable {
         gameField.mappingGameTile(x, y + 3, null);
         gameField.mappingGameTile(x + 3, y + 3, null);
 
+    }
+
+    public double getCost() {
+        return cost_;
     }
 }

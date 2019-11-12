@@ -11,6 +11,11 @@ public class SmallerEnemy extends Enemy {
         size_ = Config.TILE_SIZE * 2;
         init(Config.SMALLER_ENEMY_MAX_HEALTH, Config.SMALLER_ENEMY_SPEED, Config.SMALLER_ENEMY_ARMOR, Config.SMALLER_ENEMY_REWARD_COINS, Config.SMALLER_ENEMY_HP_BAR_OFFSET);
     }
+    public SmallerEnemy(GameField gameField, int hp, int speed, int armor, int coins) {
+        super(gameField);
+        size_ = Config.TILE_SIZE * 2;
+        init(hp, speed, armor, coins, Config.SMALLER_ENEMY_HP_BAR_OFFSET);
+    }
 
     public void draw() {
 

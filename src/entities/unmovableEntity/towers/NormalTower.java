@@ -11,6 +11,7 @@ public class NormalTower extends Tower {
         size_ = Config.TILE_SIZE;
         range_ = Config.NORMAL_TOWER_RANGE;
         speed_ = Config.NORMAL_TOWER_SPEED;
+        cost_ = Config.NORMAL_TOWER_COST;
     }
 
     protected long tickDown = 0;

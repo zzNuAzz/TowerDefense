@@ -12,6 +12,7 @@ public class SniperTower extends Tower {
         size_ = Config.TILE_SIZE;
         range_ = Config.SNIPER_TOWER_RANGE;
         speed_ = Config.SNIPER_TOWER_SPEED;
+        cost_ = Config.SNIPER_TOWER_COST;
     }
 
     private long tickDown = 0;

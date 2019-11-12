@@ -10,6 +10,11 @@ public class BossEnemy extends Enemy {
         size_ = Config.TILE_SIZE * 2;
         init(Config.BOSS_ENEMY_MAX_HEALTH, Config.BOSS_ENEMY_SPEED, Config.BOSS_ENEMY_ARMOR, Config.BOSS_ENEMY_REWARD_COINS, Config.BOSS_ENEMY_HP_BAR_OFFSET);
     }
+    public BossEnemy(GameField gameField, int hp, int speed, int armor, int coins) {
+        super(gameField);
+        size_ = Config.TILE_SIZE * 2;
+        init(hp, speed, armor, coins, Config.BOSS_ENEMY_HP_BAR_OFFSET);
+    }
 
     @Override
     public void draw() {

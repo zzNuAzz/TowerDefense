@@ -15,6 +15,10 @@ public abstract class Enemy extends MovableEntity {
     protected GameField gameField_;
     protected Direct direct = Direct.RIGHT;
 
+
+    private long createdTick;
+    private double distanceSpawn;
+
     private double maxHP;
     private Vec2d hpBarOffset;
 
@@ -37,14 +41,18 @@ public abstract class Enemy extends MovableEntity {
         this.hpBarOffset = hpBarOffset;
     }
 
-    public GameField getGameField_() {
-        return gameField_;
-    }
 
     public void setDirect(Direct direct) {
         this.direct = direct;
     }
 
+    public double getDistanceSpawn() {
+        return distanceSpawn;
+    }
+
+    public void setCreatedTick(long createdTick) {
+        this.createdTick = createdTick;
+    }
 
     public Direct findDirect() {
         int j = (int) (xPos_ / Config.TILE_SIZE);
@@ -70,6 +78,10 @@ public abstract class Enemy extends MovableEntity {
         if (gameField_.getTiles(i, j + 1) == 4 && dy == 0) return Direct.LEFT;
         if (gameField_.getTiles(i, j) == 3 && dy == 0) return Direct.RIGHT;
         return Direct.UP;
+    }
+
+    public int getRewardCoins() {
+        return rewardCoins_;
     }
 
     public void damage(double damage) {
@@ -100,7 +112,7 @@ public abstract class Enemy extends MovableEntity {
                 break;
         }
         super.update(t);
-
+        distanceSpawn = (t - createdTick) * speed_;
         //on destination
         if (isOnDest() || healthPoint_ <= 0) {
             if (isOnDest()) gameField_.damage(1);

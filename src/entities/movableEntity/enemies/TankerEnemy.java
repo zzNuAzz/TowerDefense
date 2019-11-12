@@ -10,6 +10,11 @@ public class TankerEnemy extends Enemy {
         size_ = Config.TILE_SIZE * 2;
         init(Config.TANKER_ENEMY_MAX_HEALTH, Config.TANKER_ENEMY_SPEED, Config.TANKER_ENEMY_ARMOR, Config.TANKER_ENEMY_REWARD_COINS, Config.TANKER_ENEMY_HP_BAR_OFFSET);
     }
+    public TankerEnemy(GameField gameField, int hp, int speed, int armor, int coins) {
+        super(gameField);
+        size_ = Config.TILE_SIZE * 2;
+        init(hp, speed, armor, coins, Config.TANKER_ENEMY_HP_BAR_OFFSET);
+    }
 
     @Override
     public void draw() {
