@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 public class GameController extends AnimationTimer {
     private static GameController controllerInstance = null;
     public GameField gameField;
-
     private boolean isRunning = false;
 
     public static Button startButton;
@@ -54,21 +53,21 @@ public class GameController extends AnimationTimer {
             controllerInstance.gameField.nextWave();
         });
         //normalTowerButton
-        normalTowerButton = new Button("Normal Tower", new ImageView(Sprite.normalTowerTop.scale(.6, .6).getImage()));
+        normalTowerButton = new Button("Normal Tower\n" + Config.NORMAL_TOWER_COST + "$", new ImageView(Sprite.normalTowerTop.scale(.6, .6).getImage()));
         normalTowerButton.setMaxWidth(200);
         normalTowerButton.setOnAction(e -> {
             controllerInstance.towerOnDrag = new NormalTower(controllerInstance.gameField);
         });
 
         //sniperTowerButton
-        sniperTowerButton = new Button("Sniper Tower", new ImageView(Sprite.sniperTowerTop.scale(.6, .6).getImage()));
+        sniperTowerButton = new Button("Sniper Tower\n" + Config.SNIPER_TOWER_COST + "$", new ImageView(Sprite.sniperTowerTop.scale(.6, .6).getImage()));
         sniperTowerButton.setMaxWidth(200);
         sniperTowerButton.setOnAction(e -> {
             controllerInstance.towerOnDrag = new SniperTower(controllerInstance.gameField);
         });
 
         //machineGunButton
-        machineGunTowerButton = new Button("Machine Tower", new ImageView(Sprite.machineGunTowerTop.scale(.6, .6).getImage()));
+        machineGunTowerButton = new Button("Machine Tower\n" + Config.MACHINE_GUN_TOWER_COST + "$", new ImageView(Sprite.machineGunTowerTop.scale(.6, .6).getImage()));
         machineGunTowerButton.setMaxWidth(200);
         machineGunTowerButton.setOnAction(e -> {
             controllerInstance.towerOnDrag = new MachineGunTower(controllerInstance.gameField);
@@ -81,7 +80,7 @@ public class GameController extends AnimationTimer {
                 controllerInstance.gameField.createTower(controllerInstance.towerOnDrag);
                 controllerInstance.towerOnDrag = null;
             }
-        }
+        } else if (mouseEvent.getButton() == MouseButton.SECONDARY) controllerInstance.towerOnDrag = null;
     }
 
     public static void mouseMoved(MouseEvent mouseEvent) {
@@ -125,7 +124,7 @@ public class GameController extends AnimationTimer {
 
         if (towerOnDrag != null) {
             towerOnDrag.draw();
-            if (towerOnDrag.canPlace()) GCSingleton.getInstance().setFill(new Color(0, 1, 0, 0.5));
+            if (towerOnDrag.canPlace(gameField.getCoins())) GCSingleton.getInstance().setFill(new Color(0, 1, 0, 0.5));
             else GCSingleton.getInstance().setFill(new Color(1, 0, 0, 0.5));
             Coordinate.drawGrid(0, 0, Config.TILE_SIZE * 20, Config.TILE_SIZE * 12, Config.TILE_SIZE / 4);
         }

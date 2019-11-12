@@ -29,28 +29,28 @@ public final class Config {
     public static final double NORMAL_ENEMY_MAX_HEALTH = 100;
     public static final double NORMAL_ENEMY_SPEED = 1.28;
     public static final double NORMAL_ENEMY_ARMOR = 3;
-    public static final int NORMAL_ENEMY_REWARD_COINS = 1;
+    public static final int NORMAL_ENEMY_REWARD_COINS = 2;
 
     //TankerEnemy
     public static final Vec2d TANKER_ENEMY_HP_BAR_OFFSET = new Vec2d(32, 16);
-    public static final double TANKER_ENEMY_MAX_HEALTH = 300;
+    public static final double TANKER_ENEMY_MAX_HEALTH = 400;
     public static final double TANKER_ENEMY_SPEED = 1.28;
-    public static final double TANKER_ENEMY_ARMOR = 3;
-    public static final int TANKER_ENEMY_REWARD_COINS = 3;
+    public static final double TANKER_ENEMY_ARMOR = 5;
+    public static final int TANKER_ENEMY_REWARD_COINS = 5;
 
     //SmallerEnemy
     public static final Vec2d SMALLER_ENEMY_HP_BAR_OFFSET = new Vec2d(32, 16);
     public static final double SMALLER_ENEMY_MAX_HEALTH = 100;
     public static final double SMALLER_ENEMY_SPEED = 1.6;
     public static final double SMALLER_ENEMY_ARMOR = 0;
-    public static final int SMALLER_ENEMY_REWARD_COINS = 2;
+    public static final int SMALLER_ENEMY_REWARD_COINS = 1;
 
     //BossEnemy
     public static final Vec2d BOSS_ENEMY_HP_BAR_OFFSET = new Vec2d(32, 16);
-    public static final double BOSS_ENEMY_MAX_HEALTH = 500;
+    public static final double BOSS_ENEMY_MAX_HEALTH = 2000;
     public static final double BOSS_ENEMY_SPEED = 1.28;
     public static final double BOSS_ENEMY_ARMOR = 3;
-    public static final int BOSS_ENEMY_REWARD_COINS = 10;
+    public static final int BOSS_ENEMY_REWARD_COINS = 50;
 
     /*
    |================================================================
@@ -77,11 +77,14 @@ public final class Config {
     //region Tower
     public static final long NORMAL_TOWER_SPEED = 30;
     public static final double NORMAL_TOWER_RANGE = 3.5 * TILE_SIZE;
+    public static final int NORMAL_TOWER_COST = 20;
 
-    public static final long MACHINE_GUN_TOWER_SPEED = 10;
+    public static final long MACHINE_GUN_TOWER_SPEED = 15;
     public static final double MACHINE_GUN_TOWER_RANGE = 2.5 * TILE_SIZE;
+    public static final int MACHINE_GUN_TOWER_COST = 50;
 
     public static final long SNIPER_TOWER_SPEED = 120;
     public static final double SNIPER_TOWER_RANGE = 4.5 * TILE_SIZE;
+    public static final int SNIPER_TOWER_COST = 60;
 
 }

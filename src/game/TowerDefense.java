@@ -35,10 +35,7 @@ public class TowerDefense extends Application {
         canvas.setOnMouseClicked(mouse -> {
             int x = (int) (mouse.getX() / (Config.TILE_SIZE / 4));
             int y = (int) (mouse.getY() / (Config.TILE_SIZE / 4));
-            System.out.println("x = " + x);
-            System.out.println("y = " + y);
             GameTile g = GameController.getInstance().gameField.getMappingGameTile(x, y);
-            System.out.println("g = " + g);
 
         });
 

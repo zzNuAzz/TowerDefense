@@ -40,6 +40,7 @@ public class GameField implements IRender {
         this.map_ = map;
     }
 
+
     public GameField(ArrayList<ArrayList<Integer>> map_, ArrayList<GameTile> tileList_, ArrayList<Queue<Pair<Enemy, Integer>>> enemySpawner, int coins) {
         this.map_ = map_;
         this.tileList_ = tileList_;
@@ -60,6 +61,7 @@ public class GameField implements IRender {
 
     public void deleteEntity(Enemy enemy) {
         deleteEnemyQueue.add(enemy);
+        coins += enemy.getRewardCoins();
     }
 
     public void damage(double damage) {
@@ -81,6 +83,7 @@ public class GameField implements IRender {
             if (enemy.getValue() > 0) enemy.setValue(enemy.getValue() - 1);
             else {
                 enemyList_.add(enemy.getKey());
+                enemy.getKey().setCreatedTick(t);
                 enemySpawner.get(wave_).poll();
             }
         }
@@ -134,6 +137,9 @@ public class GameField implements IRender {
     }
 
 
+    public int getCoins() {
+        return coins;
+    }
     public void mappingGameTile(int x, int y, GameTile value) {
         hashMap.put(y * Config.COL_NUMBER * 4 + x, value);
     }
@@ -148,9 +154,10 @@ public class GameField implements IRender {
 
     public void createTower(Tower towerOnDrag) {
 
-        if (towerOnDrag.canPlace()) {  int x = (int) Coordinate.fixAccuracy(towerOnDrag.getXPos() / (Config.TILE_SIZE / 4.));
+        if (towerOnDrag.canPlace(coins)) {  int x = (int) Coordinate.fixAccuracy(towerOnDrag.getXPos() / (Config.TILE_SIZE / 4.));
             int y = (int) Coordinate.fixAccuracy(towerOnDrag.getYPos() / (Config.TILE_SIZE / 4.));
             tileList_.add(towerOnDrag);
+            coins -= towerOnDrag.getCost();
             towerOnDrag.mapping(this, x,y);
             towerOnDrag.setPosition(x * Config.TILE_SIZE / 4., y * Config.TILE_SIZE / 4.);
         }
