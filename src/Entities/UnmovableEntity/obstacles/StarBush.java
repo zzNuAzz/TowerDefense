@@ -1,4 +1,4 @@
-package entities.unmovableEntity.Obstacle;
+package entities.unmovableEntity.obstacles;
 
 import game.GameField;
 import graphics.Sprite;

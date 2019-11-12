@@ -1,8 +1,8 @@
 package entities.movableEntity.bullet;
 
 import com.sun.javafx.geom.Vec2d;
-import entities.movableEntity.Enemies.Enemy;
-import entities.movableEntity.Enemies.MovableEntity;
+import entities.movableEntity.enemies.Enemy;
+import entities.movableEntity.enemies.MovableEntity;
 import game.GameField;
 
 public abstract class Bullet extends MovableEntity {

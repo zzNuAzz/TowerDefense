@@ -1,4 +1,4 @@
-package entities.unmovableEntity.Towers;
+package entities.unmovableEntity.towers;
 
 import entities.movableEntity.bullet.SniperBullet;
 import game.Config;

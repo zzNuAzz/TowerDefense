@@ -1,7 +1,7 @@
 package entities.movableEntity.bullet;
 
 import entities.Rotatable;
-import entities.movableEntity.Enemies.Enemy;
+import entities.movableEntity.enemies.Enemy;
 import game.Config;
 import game.GameField;
 import graphics.Coordinate;

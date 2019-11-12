@@ -1,4 +1,4 @@
-package entities.movableEntity.Enemies;
+package entities.movableEntity.enemies;
 
 import com.sun.javafx.geom.Vec2d;
 import game.Config;

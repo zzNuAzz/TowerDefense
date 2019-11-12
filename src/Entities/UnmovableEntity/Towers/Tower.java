@@ -1,8 +1,8 @@
-package entities.unmovableEntity.Towers;
+package entities.unmovableEntity.towers;
 
 import com.sun.javafx.geom.Vec2d;
 import entities.Rotatable;
-import entities.movableEntity.Enemies.Enemy;
+import entities.movableEntity.enemies.Enemy;
 import entities.unmovableEntity.GameTile;
 import game.Config;
 import game.GameField;

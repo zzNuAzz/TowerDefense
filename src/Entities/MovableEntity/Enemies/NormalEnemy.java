@@ -1,4 +1,4 @@
-package entities.movableEntity.Enemies;
+package entities.movableEntity.enemies;
 
 import game.Config;
 import game.GameField;

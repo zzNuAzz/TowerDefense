@@ -1,6 +1,5 @@
-package entities.unmovableEntity.Towers;
+package entities.unmovableEntity.towers;
 
-import com.sun.javafx.geom.Vec2d;
 import entities.movableEntity.bullet.CircleBullet;
 import game.Config;
 import game.GameField;

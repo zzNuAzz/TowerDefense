@@ -1,9 +1,9 @@
 package game;
 
-import entities.unmovableEntity.Towers.MachineGunTower;
-import entities.unmovableEntity.Towers.NormalTower;
-import entities.unmovableEntity.Towers.SniperTower;
-import entities.unmovableEntity.Towers.Tower;
+import entities.unmovableEntity.towers.MachineGunTower;
+import entities.unmovableEntity.towers.NormalTower;
+import entities.unmovableEntity.towers.SniperTower;
+import entities.unmovableEntity.towers.Tower;
 import graphics.Coordinate;
 import graphics.GCSingleton;
 import graphics.Sprite;

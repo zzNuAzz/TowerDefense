@@ -1,8 +1,6 @@
 package entities.movableEntity.bullet;
 
-import com.sun.javafx.geom.Vec2d;
-import entities.movableEntity.Enemies.Enemy;
-import entities.unmovableEntity.Towers.Tower;
+import entities.movableEntity.enemies.Enemy;
 import game.Config;
 import game.GameField;
 import graphics.Sprite;

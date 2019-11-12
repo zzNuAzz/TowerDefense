@@ -1,11 +1,11 @@
 package game;
 
-import MyUtil.Pair;
+import myUtils.Pair;
 import entities.IRender;
 import entities.movableEntity.bullet.Bullet;
-import entities.movableEntity.Enemies.*;
+import entities.movableEntity.enemies.*;
 import entities.unmovableEntity.GameTile;
-import entities.unmovableEntity.Towers.Tower;
+import entities.unmovableEntity.towers.Tower;
 import graphics.Coordinate;
 import graphics.GCSingleton;
 import graphics.Sprite;

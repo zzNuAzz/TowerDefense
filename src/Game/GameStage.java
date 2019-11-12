@@ -1,9 +1,9 @@
 package game;
 
-import MyUtil.Pair;
-import entities.movableEntity.Enemies.*;
+import myUtils.Pair;
+import entities.movableEntity.enemies.*;
 import entities.unmovableEntity.GameTile;
-import entities.unmovableEntity.Obstacle.*;
+import entities.unmovableEntity.obstacles.*;
 import entities.unmovableEntity.Road;
 
 import java.io.File;

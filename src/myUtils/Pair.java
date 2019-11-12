@@ -1,6 +1,5 @@
-package MyUtil;
+package myUtils;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 public class Pair<K,V> {
