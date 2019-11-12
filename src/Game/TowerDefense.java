@@ -1,16 +1,13 @@
-package Game;
+package game;
 
-import Entities.MovableEntity.Enemy;
-import Entities.MovableEntity.NormalEnemy;
-import Graphics.Coordinate;
-import javafx.animation.AnimationTimer;
+import entities.unmovableEntity.GameTile;
+import graphics.GCSingleton;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -19,30 +16,45 @@ public class TowerDefense extends Application {
         launch(args);
     }
 
-    private static double zoomX = 0.5;
-    private static double zoomY = 0.5;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Tower Defense");
-        Group root = new Group();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        Canvas canvas = new Canvas(128*20*zoomX, 128*12*zoomY);
-        root.getChildren().add(canvas);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.scale(zoomX,zoomY);
-        System.out.println("canvas.getWidth() = " + canvas.getWidth());
-//test class + method :)
-        GameField gameField = new GameField("Level/level1.txt", 0);
-        long time = System.nanoTime();
-        new AnimationTimer(){
-            @Override
-            public void handle(long now) {
-                gameField.update(now-time);
-                gameField.draw(gc);
-            }
-        }.start();
+        primaryStage.setResizable(false);
+        primaryStage.setMaxWidth(Config.SCREEN_WIDTH);
+        primaryStage.setMaxHeight(Config.SCREEN_HEIGHT + 32/*Title Bar*/);
+
+        AnchorPane root = new AnchorPane();
+        primaryStage.setScene(new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT));
+        //canvas + graphics
+        Canvas canvas = new Canvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
+        root.setOnMouseMoved(GameController::mouseMoved);
+        root.setOnMouseClicked(GameController::mouseClicked);
+        GCSingleton.setInstance(canvas.getGraphicsContext2D());
+
+        canvas.setOnMouseClicked(mouse -> {
+            int x = (int) (mouse.getX() / (Config.TILE_SIZE / 4));
+            int y = (int) (mouse.getY() / (Config.TILE_SIZE / 4));
+            System.out.println("x = " + x);
+            System.out.println("y = " + y);
+            GameTile g = GameController.getInstance().gameField.getMappingGameTile(x, y);
+            System.out.println("g = " + g);
+
+        });
+
+        GridPane gridButton = new GridPane();
+        AnchorPane.setLeftAnchor(gridButton, Config.CANVAS_WIDTH);
+        gridButton.setPadding(new Insets(5, 5, 0, 5));
+        gridButton.add(GameController.startButton, 0, 0);
+        gridButton.add(GameController.stopButton, 1, 0);
+        gridButton.add(GameController.nextWaveButton, 0, 1);
+        gridButton.add(GameController.normalTowerButton, 0, 2, 2, 1);
+        gridButton.add(GameController.sniperTowerButton, 0, 3, 2, 1);
+        gridButton.add(GameController.machineGunTowerButton, 0, 4, 2, 1);
+        root.getChildren().addAll(canvas, gridButton);
+
+        GameController.getInstance().start();
         primaryStage.show();
     }
+
 }

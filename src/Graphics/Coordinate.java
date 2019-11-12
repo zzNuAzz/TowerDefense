@@ -1,28 +1,34 @@
-package Graphics;
+package graphics;
 
+import game.Config;
 import com.sun.javafx.geom.Vec2d;
 import com.sun.javafx.geom.Vec2f;
-import javafx.scene.canvas.GraphicsContext;
+
+import java.math.BigDecimal;
+
 public class Coordinate {
-    public static int TILE_SIZE = 128;
-    public static Vec2d getTiles(int x, int y, int size) {
-        return new Vec2d(x / size,y /size);
+
+    public static void drawGrid(int minX, int minY, int width, int height, int size) {
+        for (int i = minX; i <= minX + width; i += size)
+            GCSingleton.getInstance().fillRect(i, minY, 1, height);
+        for (int i = minY; i <= minY + height; i += size)
+            GCSingleton.getInstance().fillRect(minX, i, width, 1);
     }
-    public static Vec2d getTiles(int x, int y) {
-        return getTiles(x, y, TILE_SIZE);
+
+    public static double fixAccuracy(double d) {
+        BigDecimal temp = new BigDecimal(Double.toString(d));
+        temp = temp.setScale(4, BigDecimal.ROUND_HALF_EVEN);
+        return Double.parseDouble(temp.stripTrailingZeros().toPlainString());
     }
-    public static Vec2f getPixels(int x, int y, int size) {
-        return new Vec2f(x*size, y*size);
-    }
-    public static Vec2f getPixels(int x, int y) { return new Vec2f(x * TILE_SIZE, y*TILE_SIZE); }
-    public static int getTiles(int i) {
-        return (int)(i/TILE_SIZE);
-    }
-    public static int getPixels(int i) { return i * TILE_SIZE; }
-    public static void drawGrid(GraphicsContext graphicsContext, int x, int y, int w, int h, int size) {
-        for(int i = x; i <= x+w; i+= size)
-            graphicsContext.fillRect(i, y,1,h);
-        for(int i = y; i <= y+h; i+= size)
-            graphicsContext.fillRect(x, i, w,1);
+
+    public static double angle(double x1, double x2, double y1, double y2) {
+        double d = Vec2d.distance(x1, y1, x2, y2);
+        double cosA = (x2 - x1) / d;
+        double sinA = (y2 - y1) / d;
+        double angle = (Math.acos(cosA) * 180 / Math.PI);
+        if (sinA > 0 && angle > 180) angle = -angle;
+        if (sinA < 0 && angle < 180) angle = -angle;
+        angle += 90;
+        return angle;
     }
 }
