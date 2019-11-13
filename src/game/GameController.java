@@ -48,7 +48,7 @@ public class GameController extends AnimationTimer {
 
         //nextWave Button
         nextWaveButton = new Button("Next Wave");
-        nextWaveButton.setMinSize(100, 100);
+        nextWaveButton.setMinSize(200, 75);
         nextWaveButton.setOnAction(e -> {
             controllerInstance.gameField.nextWave();
         });

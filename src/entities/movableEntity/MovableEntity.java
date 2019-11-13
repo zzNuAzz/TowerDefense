@@ -1,4 +1,4 @@
-package entities.movableEntity.enemies;
+package entities.movableEntity;
 
 import entities.GameEntity;
 import graphics.Coordinate;

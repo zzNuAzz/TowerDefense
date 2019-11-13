@@ -30,7 +30,7 @@ public class GameField implements IRender {
     private Queue<Enemy> deleteEnemyQueue = new LinkedList<>();
     private Queue<Bullet> deleteBulletQueue = new LinkedList<>();
 
-    private HashMap<Integer, GameTile> hashMap = new HashMap<>(); // mapping gametile
+    private HashMap<Integer, GameTile> hashMap = new HashMap<>(); // mapping GameTile
 
     private int wave_ = 0;
     private int coins = 200;
@@ -40,6 +40,9 @@ public class GameField implements IRender {
         this.map_ = map;
     }
 
+    private enum GameStatus {VICTORY, DEFEAT, RUNNING}
+
+    private GameStatus stt = GameStatus.RUNNING;
 
     public GameField(ArrayList<ArrayList<Integer>> map_, ArrayList<GameTile> tileList_, ArrayList<Queue<Pair<Enemy, Integer>>> enemySpawner, int coins) {
         this.map_ = map_;
@@ -100,6 +103,7 @@ public class GameField implements IRender {
 
     @Override
     public void update(long t) {
+        if (stt != GameStatus.RUNNING) return;
         spawnEnemy(t);
         //enemy
         for (Enemy enemy : enemyList_) enemy.update(t);
@@ -110,6 +114,9 @@ public class GameField implements IRender {
 
         while (!deleteEnemyQueue.isEmpty()) enemyList_.remove(deleteEnemyQueue.poll());
         while (!deleteBulletQueue.isEmpty()) bulletList_.remove(deleteBulletQueue.poll());
+
+        if(healthPoint <= 0) stt = GameStatus.DEFEAT;
+        if(enemyList_.isEmpty() && enemySpawner.get(enemySpawner.size()-1).isEmpty()) stt = GameStatus.VICTORY;
     }
 
     @Override
@@ -134,12 +141,18 @@ public class GameField implements IRender {
         GCSingleton.getInstance().setFont(new Font(36));
         GCSingleton.getInstance().fillText("Wave #" + (wave_ + 1) + "/" + enemySpawner.size() + "\tHP: " + healthPoint + "\tCoins: " + coins, 0, 36);
 
+        if (stt == GameStatus.VICTORY) {
+            Sprite.victory.draw(400,100);
+        } else if (stt == GameStatus.DEFEAT) {
+            Sprite.defeat.draw(400,100);
+        }
     }
 
 
     public int getCoins() {
         return coins;
     }
+
     public void mappingGameTile(int x, int y, GameTile value) {
         hashMap.put(y * Config.COL_NUMBER * 4 + x, value);
     }
@@ -154,11 +167,12 @@ public class GameField implements IRender {
 
     public void createTower(Tower towerOnDrag) {
 
-        if (towerOnDrag.canPlace(coins)) {  int x = (int) Coordinate.fixAccuracy(towerOnDrag.getXPos() / (Config.TILE_SIZE / 4.));
+        if (towerOnDrag.canPlace(coins)) {
+            int x = (int) Coordinate.fixAccuracy(towerOnDrag.getXPos() / (Config.TILE_SIZE / 4.));
             int y = (int) Coordinate.fixAccuracy(towerOnDrag.getYPos() / (Config.TILE_SIZE / 4.));
             tileList_.add(towerOnDrag);
             coins -= towerOnDrag.getCost();
-            towerOnDrag.mapping(this, x,y);
+            towerOnDrag.mapping(this, x, y);
             towerOnDrag.setPosition(x * Config.TILE_SIZE / 4., y * Config.TILE_SIZE / 4.);
         }
     }
@@ -166,6 +180,5 @@ public class GameField implements IRender {
 
     public void nextWave() {
         if (enemyList_.isEmpty() && wave_ < enemySpawner.size() - 1 && enemySpawner.get(wave_).isEmpty()) wave_++;
-
     }
 }

@@ -44,7 +44,7 @@ public class TowerDefense extends Application {
         gridButton.setPadding(new Insets(5, 5, 0, 5));
         gridButton.add(GameController.startButton, 0, 0);
         gridButton.add(GameController.stopButton, 1, 0);
-        gridButton.add(GameController.nextWaveButton, 0, 1);
+        gridButton.add(GameController.nextWaveButton, 0, 1,2,1);
         gridButton.add(GameController.normalTowerButton, 0, 2, 2, 1);
         gridButton.add(GameController.sniperTowerButton, 0, 3, 2, 1);
         gridButton.add(GameController.machineGunTowerButton, 0, 4, 2, 1);

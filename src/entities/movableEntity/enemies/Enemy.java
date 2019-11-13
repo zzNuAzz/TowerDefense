@@ -1,6 +1,7 @@
 package entities.movableEntity.enemies;
 
 import com.sun.javafx.geom.Vec2d;
+import entities.movableEntity.MovableEntity;
 import game.Config;
 import game.GameField;
 import graphics.Coordinate;

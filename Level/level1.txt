@@ -20,14 +20,20 @@ BigRock     4   40
 wave	0
 NormalEnemy	    30	-1	1	60
 wave	1
-NormalEnemy	    30	-1	1	40
-SmallerEnemy	30	-1	1	30
+NormalEnemy	    25	-1	1	40
+SmallerEnemy	25	-1	1	30
 wave	2
-SmallerEnemy	60	-1	1	30
+SmallerEnemy	50	-1	1	30
 wave	3
 NormalEnemy	    30	-1	1	40
 TankerEnemy	    20	-1	1	60
 wave	4
 NormalEnemy	    20	-1	1	40
 SmallerEnemy	20	-1	1	30
-BossEnemy	    3	-1	1	90
+BossEnemy	    1	-1	1	90
+wave 5
+SmallerEnemy    10  -1  1   30
+TankerEnemy     30  -1  1   30
+wave 6
+NormalEnemy    10  -1  1   30
+TankerEnemy     30  -1  1   30

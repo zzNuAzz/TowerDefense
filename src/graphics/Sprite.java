@@ -205,4 +205,14 @@ public class Sprite {
     public static Sprite starBushObstacle = SpriteSheet.texture_small.getSprite(5, 19);
     public static Sprite smallRockObstacle = SpriteSheet.texture_small.getSprite(5, 20);
     public static Sprite bigRockObstacle = SpriteSheet.texture_small.getSprite(5, 21);
+
+    /*
+
+    |=========================================================
+    |EndGame
+    |=========================================================
+
+    */
+    public static Sprite victory = new Sprite("res/victory.png");
+    public static Sprite defeat = new Sprite("res/defeat.png");
 }
