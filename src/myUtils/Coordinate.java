@@ -1,4 +1,4 @@
-package graphics;
+package myUtils;
 
 import game.Config;
 import com.sun.javafx.geom.Vec2d;
@@ -7,13 +7,6 @@ import com.sun.javafx.geom.Vec2f;
 import java.math.BigDecimal;
 
 public class Coordinate {
-
-    public static void drawGrid(int minX, int minY, int width, int height, int size) {
-        for (int i = minX; i <= minX + width; i += size)
-            GCSingleton.getInstance().fillRect(i, minY, 1, height);
-        for (int i = minY; i <= minY + height; i += size)
-            GCSingleton.getInstance().fillRect(minX, i, width, 1);
-    }
 
     public static double fixAccuracy(double d) {
         BigDecimal temp = new BigDecimal(Double.toString(d));

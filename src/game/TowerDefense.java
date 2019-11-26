@@ -1,7 +1,7 @@
 package game;
 
-import entities.unmovableEntity.GameTile;
-import graphics.GCSingleton;
+import graphics.Sprite;
+import gui.MainMenu;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,32 +11,21 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
-public class TowerDefense extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class TowerDefense{
 
+    public static final Scene scene = InitScene();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Tower Defense");
-        primaryStage.setResizable(false);
-        primaryStage.setMaxWidth(Config.SCREEN_WIDTH);
-        primaryStage.setMaxHeight(Config.SCREEN_HEIGHT + 32/*Title Bar*/);
-
+    private static Scene InitScene() {
         AnchorPane root = new AnchorPane();
-        primaryStage.setScene(new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT));
         //canvas + graphics
         Canvas canvas = new Canvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
+        Sprite.setGraphicsContext(canvas.getGraphicsContext2D());
+
         root.setOnMouseMoved(GameController::mouseMoved);
         root.setOnMouseClicked(GameController::mouseClicked);
-        GCSingleton.setInstance(canvas.getGraphicsContext2D());
 
-        canvas.setOnMouseClicked(mouse -> {
-            int x = (int) (mouse.getX() / (Config.TILE_SIZE / 4));
-            int y = (int) (mouse.getY() / (Config.TILE_SIZE / 4));
-            GameTile g = GameController.getInstance().gameField.getMappingGameTile(x, y);
-
+        canvas.setOnMouseClicked(e -> {
+            System.out.print(String.format("%d %d -> ", (int)e.getX() / 16, (int)e.getY() / 16));
         });
 
         GridPane gridButton = new GridPane();
@@ -44,14 +33,20 @@ public class TowerDefense extends Application {
         gridButton.setPadding(new Insets(5, 5, 0, 5));
         gridButton.add(GameController.startButton, 0, 0);
         gridButton.add(GameController.stopButton, 1, 0);
-        gridButton.add(GameController.nextWaveButton, 0, 1,2,1);
-        gridButton.add(GameController.normalTowerButton, 0, 2, 2, 1);
-        gridButton.add(GameController.sniperTowerButton, 0, 3, 2, 1);
-        gridButton.add(GameController.machineGunTowerButton, 0, 4, 2, 1);
-        root.getChildren().addAll(canvas, gridButton);
+        gridButton.add(GameController.nextWaveButton, 0, 1);
+        gridButton.add(GameController.exitButton, 1, 1);
 
-        GameController.getInstance().start();
-        primaryStage.show();
+        gridButton.add(GameController.ironTowerButton, 0, 2, 2, 1);
+        gridButton.add(GameController.fireTowerButton, 0, 3, 2, 1);
+        gridButton.add(GameController.archerTowerButton, 0, 4, 2, 1);
+
+
+//        gridButton.add(GameController.exp, 0,7);
+//        gridButton.add(GameController.imp, 1,7);
+
+        root.getChildren().addAll(canvas, gridButton);
+        return new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
     }
+
 
 }

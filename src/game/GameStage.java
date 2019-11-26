@@ -1,130 +1,125 @@
 package game;
 
+import com.sun.javafx.geom.Vec2d;
+import entities.unmovableEntity.obstacles.Bush;
+import entities.unmovableEntity.obstacles.Road;
+import entities.unmovableEntity.obstacles.Stone;
+import entities.unmovableEntity.obstacles.Tree;
 import myUtils.Pair;
 import entities.movableEntity.enemies.*;
 import entities.unmovableEntity.GameTile;
-import entities.unmovableEntity.obstacles.*;
-import entities.unmovableEntity.Road;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameStage {
 
     public static GameField loadGameField(String path) {
-        Scanner sc = null;
+        Scanner sc;
         try {
             sc = new Scanner(new File(path));
         } catch (FileNotFoundException e) {
             System.err.println(e.toString());
             return null;
         }
-        ArrayList<ArrayList<Integer>> map = new ArrayList<>();
-        for (int i = 0; i < Config.ROW_NUMBER; i++) {
-            map.add(new ArrayList<Integer>());
-            for (int j = 0; j < Config.COL_NUMBER; j++) map.get(i).add(sc.nextInt());
-        }
+
         ArrayList<GameTile> tileArrayList = new ArrayList<>();
         ArrayList<Queue<Pair<Enemy, Integer>>> enemySpawner = new ArrayList<>();
-        GameField gameField = new GameField(map, tileArrayList, enemySpawner, sc.nextInt());
-
-        for (int i = 0; i < Config.ROW_NUMBER; i++) {
-            for (int j = 0; j < Config.COL_NUMBER; j++)
-                new Road(gameField, j * 4, i * 4, map.get(i).get(j));
+        int numRoutes = sc.nextInt();
+        int numPaths = sc.nextInt();
+        sc.nextLine();
+        ArrayList<Queue<Vec2d>> paths = new ArrayList<>();
+        for (int i = 0; i < numPaths; i++) {
+            paths.add(new LinkedList<>());
+            String line = sc.nextLine();
+            String[] ps = line.split("->");
+            for (String p : ps) {
+                String[] point = p.trim().split("\\s+");
+                paths.get(i).add(new Vec2d(Integer.parseInt(point[0]), Integer.parseInt(point[1])));
+            }
         }
-
+        int coins = sc.nextInt();
+        int row = sc.nextInt();
+        int col = sc.nextInt();
+        GameField gameField = new GameField(tileArrayList, enemySpawner, coins, row, col);
         gameField.setEnemySpawner(enemySpawner);
+
+
+        sc.nextLine();
+        for (int i = 0; i < row; i++) {
+            String s = sc.nextLine();
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(j) == '1') {
+                    gameField.mappingGameTile(j, i, new Road());
+                }
+            }
+        }
         int wave = 0;
+        Random rand = new Random();
         while (sc.hasNext()) {
             switch (sc.next()) {
                 case "wave":
                     wave = sc.nextInt();
                     while (wave > enemySpawner.size() - 1) enemySpawner.add(new LinkedList<>());
                     break;
-                case "NormalEnemy": {
+                case "NormalOrk": {
                     int number = sc.nextInt();
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
+                    int way = sc.nextInt();
                     int tickDelay = sc.nextInt();
                     while (number-- > 0) {
-                        NormalEnemy normalEnemy = new NormalEnemy(gameField);
+                        Enemy normalEnemy = new NormalOrk(gameField, new LinkedList<>(paths.get(way == -1 ? rand.nextInt(numPaths-numRoutes) : way)));
                         enemySpawner.get(wave).add(new Pair<>(normalEnemy, tickDelay));
-                        normalEnemy.setPosition(x * Config.TILE_SIZE, y * Config.TILE_SIZE);
-                        normalEnemy.setDirect(Enemy.Direct.RIGHT);
+
                     }
                     break;
                 }
-                case "SmallerEnemy": {
+                case "BatEnemy": {
                     int number = sc.nextInt();
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
+                    int way = sc.nextInt();
                     int tickDelay = sc.nextInt();
                     while (number-- > 0) {
-                        SmallerEnemy smallerEnemy = new SmallerEnemy(gameField);
+                        Enemy smallerEnemy = new BatEnemy(gameField, new LinkedList<>(paths.get(way == -1 ? rand.nextInt(numPaths-numRoutes) : way)));
                         enemySpawner.get(wave).add(new Pair<>(smallerEnemy, tickDelay));
-                        smallerEnemy.setPosition(x * Config.TILE_SIZE, y * Config.TILE_SIZE);
-                        smallerEnemy.setDirect(Enemy.Direct.RIGHT);
                     }
                     break;
                 }
-                case "TankerEnemy": {
+                case "TankOrk": {
                     int number = sc.nextInt();
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
+                    int way = sc.nextInt();
                     int tickDelay = sc.nextInt();
                     while (number-- > 0) {
-                        TankerEnemy tankerEnemy = new TankerEnemy(gameField);
+                        Enemy tankerEnemy = new TankOrk(gameField, new LinkedList<>(paths.get(way == -1 ? rand.nextInt(numPaths-numRoutes) : way)));
                         enemySpawner.get(wave).add(new Pair<>(tankerEnemy, tickDelay));
-                        tankerEnemy.setPosition(x * Config.TILE_SIZE, y * Config.TILE_SIZE);
-                        tankerEnemy.setDirect(Enemy.Direct.RIGHT);
                     }
                     break;
                 }
-                case "BossEnemy": {
+                case "Troll": {
                     int number = sc.nextInt();
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
+                    int way = sc.nextInt();
                     int tickDelay = sc.nextInt();
                     while (number-- > 0) {
-                        BossEnemy bossEnemy = new BossEnemy(gameField);
+                        Enemy bossEnemy = new TrollEnemy(gameField, new LinkedList<>(paths.get(way == -1 ? rand.nextInt(numPaths-numRoutes) : way)));
                         enemySpawner.get(wave).add(new Pair<>(bossEnemy, tickDelay));
-                        bossEnemy.setPosition(x * Config.TILE_SIZE, y * Config.TILE_SIZE);
-                        bossEnemy.setDirect(Enemy.Direct.RIGHT);
                     }
                     break;
                 }
-                case "SmallBush": {
+                case "Bush": {
                     int x = sc.nextInt();
                     int y = sc.nextInt();
-                    tileArrayList.add(new SmallBush(gameField, x, y));
+                    tileArrayList.add(new Bush(gameField, x, y));
                     break;
                 }
-                case "BigBush": {
+                case "Tree": {
                     int x = sc.nextInt();
                     int y = sc.nextInt();
-                    tileArrayList.add(new BigBush(gameField, x, y));
+                    tileArrayList.add(new Tree(gameField, x, y));
                     break;
                 }
-                case "StarBush": {
+                case "Stone": {
                     int x = sc.nextInt();
                     int y = sc.nextInt();
-                    tileArrayList.add(new StarBush(gameField, x, y));
-                    break;
-                }
-                case "SmallRock": {
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
-                    tileArrayList.add(new SmallRock(gameField, x, y));
-                    break;
-                }
-                case "BigRock": {
-                    int x = sc.nextInt();
-                    int y = sc.nextInt();
-                    tileArrayList.add(new BigRock(gameField, x, y));
+                    tileArrayList.add(new Stone(gameField, x, y));
                     break;
                 }
             }

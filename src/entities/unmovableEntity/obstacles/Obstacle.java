@@ -1,14 +1,21 @@
 package entities.unmovableEntity.obstacles;
 
+import entities.Saleable;
 import entities.unmovableEntity.GameTile;
 import game.Config;
+import game.GameController;
+import game.GameField;
+import sound.Sound;
 
-public abstract class Obstacle extends GameTile {
-    protected int size;
+public abstract class Obstacle extends GameTile implements Saleable {
+    private int cost_;
+    protected GameField gameField_;
 
-    public Obstacle(int x, int y) {
-        xPos_ = x * (Config.TILE_SIZE / 4d);
-        yPos_ = y * (Config.TILE_SIZE / 4d);
+    public Obstacle(int x, int y, int cost) {
+        xPos_ = x * 16;
+        yPos_ = y * 16;
+        this.cost_ = cost;
+
     }
 
     @Override
@@ -16,5 +23,19 @@ public abstract class Obstacle extends GameTile {
 
     }
 
+    protected abstract void unMapping();
 
+    @Override
+    public void sell() {
+        if (GameController.getInstance().gameField.getCoins() < getSell()) return;
+        GameController.getInstance().gameField.deleteTile(this);
+        GameController.getInstance().gameField.addCoin(-getSell());
+        unMapping();
+
+    }
+
+    @Override
+    public int getSell() {
+        return cost_;
+    }
 }
