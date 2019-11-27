@@ -1,57 +1,104 @@
 package game;
 
-import entities.unmovableEntity.GameTile;
-import graphics.GCSingleton;
-import javafx.application.Application;
+import graphics.Sprite;
+import gui.MainMenu;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import main.Main;
 
 
-public class TowerDefense extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class TowerDefense {
+
+    public static final Group defeat = initDefeat();
+    public static final Group victory = initVictory();
+
+    public static final Scene scene = InitScene();
 
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Tower Defense");
-        primaryStage.setResizable(false);
-        primaryStage.setMaxWidth(Config.SCREEN_WIDTH);
-        primaryStage.setMaxHeight(Config.SCREEN_HEIGHT + 32/*Title Bar*/);
-
+    private static Scene InitScene() {
         AnchorPane root = new AnchorPane();
-        primaryStage.setScene(new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT));
         //canvas + graphics
         Canvas canvas = new Canvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
+        Sprite.setGraphicsContext(canvas.getGraphicsContext2D());
+
         root.setOnMouseMoved(GameController::mouseMoved);
         root.setOnMouseClicked(GameController::mouseClicked);
-        GCSingleton.setInstance(canvas.getGraphicsContext2D());
 
-        canvas.setOnMouseClicked(mouse -> {
-            int x = (int) (mouse.getX() / (Config.TILE_SIZE / 4));
-            int y = (int) (mouse.getY() / (Config.TILE_SIZE / 4));
-            GameTile g = GameController.getInstance().gameField.getMappingGameTile(x, y);
-
-        });
+//        canvas.setOnMouseClicked(e -> {
+//            System.out.print(String.format("%d %d -> ", (int)e.getX() / 16, (int)e.getY() / 16));
+//        });
 
         GridPane gridButton = new GridPane();
         AnchorPane.setLeftAnchor(gridButton, Config.CANVAS_WIDTH);
         gridButton.setPadding(new Insets(5, 5, 0, 5));
         gridButton.add(GameController.startButton, 0, 0);
         gridButton.add(GameController.stopButton, 1, 0);
-        gridButton.add(GameController.nextWaveButton, 0, 1,2,1);
-        gridButton.add(GameController.normalTowerButton, 0, 2, 2, 1);
-        gridButton.add(GameController.sniperTowerButton, 0, 3, 2, 1);
-        gridButton.add(GameController.machineGunTowerButton, 0, 4, 2, 1);
-        root.getChildren().addAll(canvas, gridButton);
+        gridButton.add(GameController.nextWaveButton, 0, 1);
+        gridButton.add(GameController.exitButton, 1, 1);
 
-        GameController.getInstance().start();
-        primaryStage.show();
+        gridButton.add(GameController.ironTowerButton, 0, 2, 2, 1);
+        gridButton.add(GameController.fireTowerButton, 0, 3, 2, 1);
+        gridButton.add(GameController.archerTowerButton, 0, 4, 2, 1);
+
+
+//        gridButton.add(GameController.exp, 0,7);
+//        gridButton.add(GameController.imp, 1,7);
+
+        root.getChildren().addAll(canvas, gridButton, defeat, victory);
+        return new Scene(root, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
     }
+
+    private static Group initDefeat() {
+        Group group = new Group();
+        group.setVisible(false);
+        ImageView back = new ImageView(new Image("res/gui/defeat.png"));
+        back.setTranslateY(100);
+        ImageView reset = new ImageView("res/gui/reset.png");
+        reset.setTranslateX(550);
+        reset.setTranslateY(550);
+        reset.setOnMouseClicked(e -> {
+            Main.stage.setScene(TowerDefense.scene);
+            GameController.getInstance().newGame(MainMenu.level[MainMenu.room]);
+            Sprite.background = Sprite.room[MainMenu.room];
+            GameController.getInstance().start();
+            group.setVisible(false);
+        });
+
+        ImageView menu = new ImageView("res/gui/menu.png");
+        menu.setTranslateX(232);
+        menu.setTranslateY(550);
+        menu.setOnMouseClicked(e -> {
+            Main.stage.setScene(MainMenu.scene);
+            group.setVisible(false);
+        });
+
+        group.getChildren().addAll(back, reset, menu);
+        return group;
+    }
+
+    private static Group initVictory() {
+        Group group = new Group();
+        group.setVisible(false);
+
+        ImageView back = new ImageView(new Image("res/gui/victory.png"));
+        back.setTranslateY(100);
+        back.setTranslateX(100);
+        ImageView menu = new ImageView("res/gui/menu.png");
+        menu.setTranslateX(400);
+        menu.setTranslateY(550);
+        menu.setOnMouseClicked(e -> {
+            group.setVisible(false);
+            Main.stage.setScene(MainMenu.scene);
+        });
+        group.getChildren().addAll(back, menu);
+        return group;
+    }
+
 
 }

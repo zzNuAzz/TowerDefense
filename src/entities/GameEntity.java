@@ -4,7 +4,8 @@ package entities;
 public abstract class GameEntity implements IRender {
     protected double xPos_ = 0;
     protected double yPos_ = 0;
-    protected double size_ = 0;
+    protected double sizeX_ = 0;
+    protected double sizeY_ = 0;
 
     public void setPosition(double x, double y) {
         setXPosition(x);
@@ -19,9 +20,14 @@ public abstract class GameEntity implements IRender {
         return yPos_;
     }
 
-    public double getSize_() {
-        return size_;
+    public double getSizeX_() {
+        return sizeX_;
     }
+
+    public double getSizeY_() {
+        return sizeY_;
+    }
+
 
     public void setXPosition(double x) {
         this.xPos_ = x;

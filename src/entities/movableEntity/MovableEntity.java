@@ -1,7 +1,7 @@
 package entities.movableEntity;
 
 import entities.GameEntity;
-import graphics.Coordinate;
+import myUtils.Coordinate;
 
 public abstract class MovableEntity extends GameEntity{
     protected double xVelocity_ = 0;
