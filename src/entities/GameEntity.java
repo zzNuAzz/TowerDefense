@@ -23,6 +23,10 @@ public abstract class GameEntity implements IRender {
     public double getSizeX_() {
         return sizeX_;
     }
+    public double getSizeY_() {
+        return sizeY_;
+    }
+
 
     public double getSizeY_() {
         return sizeY_;
