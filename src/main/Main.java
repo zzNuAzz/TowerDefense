@@ -21,7 +21,7 @@ public class Main extends Application{
         stage.setMaxHeight(Config.SCREEN_HEIGHT + 32/*Title Bar*/);
         stage.setScene(MainMenu.scene);
 
-        Sound.backGroundSound.play();
+//        Sound.backGroundSound.play();
         stage.show();
     }
 }

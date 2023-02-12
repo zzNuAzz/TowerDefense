@@ -27,12 +27,6 @@ public abstract class GameEntity implements IRender {
         return sizeY_;
     }
 
-
-    public double getSizeY_() {
-        return sizeY_;
-    }
-
-
     public void setXPosition(double x) {
         this.xPos_ = x;
     }
